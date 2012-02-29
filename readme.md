@@ -1,6 +1,6 @@
 # Scala API in Ruby
 
-Surely, it works. It serves as a Ruby reference for Scala programmers.
+Surely, it works. It also serves as a Ruby reference for Scala programmers.
 
 ## Setup
 
