@@ -12,9 +12,13 @@ module Scaruby
     def initialize(enumerable)
       @enumerable = enumerable
     end
+
+    def to_a
+      @enumerable.to_a
+    end
   
     def count(&block)
-      filter(&block).size
+      filter(&block).to_a.size
     end
   
     def diff(that)
@@ -22,33 +26,33 @@ module Scaruby
     end
   
     def distinct 
-      @enumerable.inject([]) {|z,x| z.include?(x) ? z : z.push(x) }
+      Seq.new(@enumerable.inject([]) {|z,x| z.include?(x) ? z : z.push(x) })
     end
   
     def drop(n)
-      @enumerable.drop(n)
+      Seq.new(@enumerable.drop(n))
     end
   
     def drop_right(n)
-      @enumerable.to_a.reverse.drop(n).reverse
+      Seq.new(@enumerable.to_a.reverse.drop(n).reverse)
     end
   
     def drop_while(&block)
-      @enumerable.inject([false,[]]) {|passed,x|
+      Seq.new(@enumerable.inject([false,[]]) {|passed,x|
         is_already_unmatched = passed[0]
         result = passed[1]
         if is_already_unmatched then passed
         elsif yield x then [false,result.push(x)]
         else [true, result] end
-      }[1]
+      }[1])
     end
   
     def filter(&block)
-      @enumerable.select {|e| yield e }
+      Seq.new(@enumerable.select {|e| yield e })
     end
   
     def flat_map(&block)
-      @enumerable.inject([]) {|z,x| 
+      Seq.new(@enumerable.inject([]) {|z,x| 
         applied = yield x
         if applied.is_a?(Enumerable) then
           applied.each {|elm| z.push(elm) }
@@ -56,7 +60,7 @@ module Scaruby
         elsif applied.is_a?(Option) then 
           applied.is_defined ? z.push(applied.get) : z
         else z.push(applied) end
-      }
+      })
     end
   
     def fold_left(z, &block)
@@ -72,7 +76,7 @@ module Scaruby
     end
   
     def map(&block)
-      @enumerable.map {|e| yield e }
+      Seq.new(@enumerable.map {|e| yield e })
     end
   
     def max 

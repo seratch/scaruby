@@ -5,3 +5,5 @@ require "scaruby/version"
 module Scaruby
 end
 
+require 'scaruby/seq'
+
