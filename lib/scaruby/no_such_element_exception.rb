@@ -1,0 +1,3 @@
+class NoSuchElementException < Exception
+end
+
