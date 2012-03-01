@@ -1,15 +1,21 @@
-# Scala API in Ruby
+# Ruby reference for Scala programmers
 
-Surely, it works. It also serves as a Ruby reference for Scala programmers.
+Surely it works fine. But it mainly serves as a Ruby reference for Scala programmers.
 
 ## Setup
 
 ```sh
+git clone git://github.com/seratch/scaruby.git
+cd scaruby
 gem install bundler
 bundle install
 ```
 
-## Playing on irb
+## Trying on irb
+
+```sh
+bundle console
+```
 
 ```ruby
 irb(main):001:0> require 'scaruby'

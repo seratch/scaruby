@@ -24,9 +24,7 @@ module Scaruby
     end
   
     def distinct 
-      Seq.new(@enumerable.inject([]) {|z,x| 
-        z.include?(x) ? z : z.push(x) 
-      })
+      Seq.new(@enumerable.to_a.uniq)
     end
   
     def drop(n)
@@ -204,7 +202,7 @@ module Scaruby
       result = []
       @enumerable.take(from).each do |e| result.push(e) end
       patch.each do |e| result.push(e) end
-      @enumerable.drop(from + replaced).each do |e| result.push(e) end
+      @enumerable.drop(from).drop(replaced).each do |e| result.push(e) end
       Seq.new(result)
     end
 
@@ -213,9 +211,7 @@ module Scaruby
     end
 
     def reverse_map(&block)
-      Seq.new(@enumerable.to_a.reverse.map {|e|
-        yield e   
-      })
+      Seq.new(@enumerable.to_a.reverse.map {|e| yield e })
     end
 
     def same_elements(that)
@@ -252,7 +248,7 @@ module Scaruby
     def sliding(len)
       result = []
       @enumerable.each_with_index do |e,idx|
-        if idx < @enumerable.size - len + 1 then 
+        if idx < (@enumerable.size - len + 1) then 
           result.push(@enumerable.slice(idx, len))
         end
       end
