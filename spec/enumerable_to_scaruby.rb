@@ -1,8 +1,8 @@
 # -*- encoding: utf-8 -*-
 
-require 'array_to_scaruby'
+require 'enumerable_to_scaruby'
 
-describe Array do
+describe Enumerable do
   it 'has #flat_map' do
     flatten = [[1,2],[3],[4,5]].flat_map {|i| i }.to_a
     flatten.should eq([1,2,3,4,5])

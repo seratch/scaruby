@@ -1,4 +1,4 @@
-#encoding: UTF-8
+# -*- encoding: utf-8 -*-
 
 describe Scaruby do
   it 'is available' do
