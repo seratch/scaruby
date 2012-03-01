@@ -2,7 +2,7 @@
 
 require 'scaruby/seq'
 
-class Array
+module Enumerable
   def method_missing(name, *args, &block)
     Scaruby::Seq.new(self).send(name, *args, &block)
   end
