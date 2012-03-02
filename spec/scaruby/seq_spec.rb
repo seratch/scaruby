@@ -7,6 +7,16 @@ describe Seq do
   one_to_five = 1.upto 5
   one_to_five_shuffled = one_to_five.sort_by {rand}
 
+  it 'does not accept invalid args' do
+    begin
+      Seq.new('aaaa').should eq(nil)
+    rescue ArgumentError
+    end
+    begin
+      Seq.new(12345).should eq(nil)
+    rescue ArgumentError
+    end
+  end
   it 'has #to_a' do
     Seq.new(one_to_five).to_a.should eq([1,2,3,4,5])
   end
@@ -146,7 +156,7 @@ describe Seq do
     Seq.new(one_to_five).mk_string('^',',','$').should eq('^1,2,3,4,5$')
     begin
       Seq.new(one_to_five).mk_string('a','b').should eq(nil)
-    rescue RuntimeError
+    rescue ArgumentError
     end
     Seq.new(one_to_five).mk_string('^',',','$','zzz').should eq('^1,2,3,4,5$')
   end

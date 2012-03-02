@@ -19,7 +19,8 @@ module Scaruby
 
     def get
       if is_defined then @value 
-      else raise NoSuchElementException end
+      else raise NoSuchElementException 
+      end
     end
 
     def get_or_else(default_value)
