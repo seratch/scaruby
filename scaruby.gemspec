@@ -7,7 +7,7 @@ Gem::Specification.new do |s|
   s.version     = Scaruby::VERSION
   s.authors     = ["Kazuhiro Sera"]
   s.email       = ["seratch@gmail.com"]
-  s.homepage    = ""
+  s.homepage    = "https://github.com/seratch/scaruby"
   s.summary     = %q{Scala API in Ruby}
   s.description = %q{Scala API in Ruby}
 

@@ -26,7 +26,8 @@ module Scaruby
     def count(&predicate)
       count = 0
       @hash.each do |k,v|
-        if yield k, v then count += 1
+        if yield k, v then 
+          count += 1
         end
       end
       count
@@ -34,7 +35,8 @@ module Scaruby
 
     def exists(&predicate)
       @hash.to_a.inject(false) {|found,kv|
-        if found then true
+        if found then 
+          true
         else 
           k, v = kv[0], kv[1]
           yield k, v
@@ -66,7 +68,8 @@ module Scaruby
 
     def forall(&predicate)
       @hash.inject(true) {|still_matched,kv|
-        if !still_matched then false
+        if !still_matched then 
+          false
         else 
           k, v = kv[0], kv[1]
           yield k, v
