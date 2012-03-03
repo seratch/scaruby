@@ -18,6 +18,18 @@ module Scaruby
     def to_a
       @array
     end
+
+    def corresponds(that, &predicate)
+      @array.zip(that).inject(true) {|still_matched,e| 
+        if ! still_matched then 
+          false
+        elsif yield e[0], e[1] then
+          true
+        else 
+          false
+        end
+      }
+    end
   
     def count(&predicate)
       filter(&predicate).size
@@ -91,14 +103,16 @@ module Scaruby
     end
 
     def flat_map(&block)
-      Seq.new(@array.inject([]) {|z,x| 
+      Seq.new(@array.inject([]) {|z,x|
         applied = yield x
         if applied.is_a?(Enumerable) then
           applied.inject(z) {|z,elm| z.push(elm) }
-        elsif applied.is_a?(Option) then 
+        elsif applied.is_a?(Seq) then
+          applied.to_a.inject(z) {|z,elm| z.push(elm) }
+        elsif applied.is_a?(Option) then
           applied.is_defined ? z.push(applied.get) : z
-        else 
-          z.push(applied) 
+        else
+          z.push(applied)
         end
       })
     end
@@ -137,6 +151,17 @@ module Scaruby
       @array.each do |e| 
         yield e 
       end
+    end
+
+    def group_by(&block) 
+      Map.new(@array.inject({}) {|z,e|
+        if z[e].nil? then
+          z[e] = [e]
+        else
+          z[e] = z[e].push(e)
+        end
+        z
+      })
     end
   
     def head
@@ -353,6 +378,10 @@ module Scaruby
 
     def union(that)
       Seq.new(@array.concat(that))
+    end
+
+    def updated(idx, elm)
+      Seq.new(@array.fill(elm,idx,1))
     end
 
     def zip(that)

@@ -12,6 +12,10 @@ source "http://rubygems.org/"
 gem 'scaruby'
 ```
 
+## Usage
+
+See specs.
+
 ## Trying on irb
 
 ```sh
@@ -40,7 +44,13 @@ irb(main):025:0> Map.new({123=>'abc',23=>'bc',345=>'cde'}).filter {|k,v| k.to_s.
 => #<Scaruby::Map:0x94afa98 @hash={123=>"abc", 345=>"cde"}>
 irb(main):026:0> Map.new({123=>'abc',23=>'bc',345=>'cde'}).filter {|k,v| k.to_s.size == 3 }.to_hash
 => {123=>"abc", 345=>"cde"}
+```
 
+You can extend Ruby with Scaruby. If the method is missing, the method in Scaruby will be invoked.
+
+Already defined methods (i.e. flat_map, find and so on) are never replaced.
+
+```ruby
 irb(main):015:0> require 'scaruby/core_ext'
 => true
 irb(main):016:0>  1.upto(5).filter {|i| i < 3 }

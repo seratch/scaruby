@@ -20,6 +20,10 @@ describe Seq do
   it 'has #to_a' do
     Seq.new(one_to_five).to_a.should eq([1,2,3,4,5])
   end
+  it 'has #corresponds' do
+    Seq.new([1,2,3]).corresponds([1,2,3]) {|a,b| a == b }.should eq(true)
+    Seq.new([1,2,3]).corresponds([3,1,2]) {|a,b| a == b }.should eq(false)
+  end
   it 'has #count' do
     Seq.new(one_to_five).count {|i| i > 2 }.should eq(3)
   end
@@ -63,8 +67,8 @@ describe Seq do
   it 'has #find' do
     some = Seq.new(one_to_five).find {|i| i < 3 }
     some.get.should eq(1)
-    some = Seq.new(one_to_five).find {|i| i > 10 }
-    some.is_defined.should eq(false)
+    none = Seq.new(one_to_five).find {|i| i > 10 }
+    none.is_defined.should eq(false)
   end
   it 'has #flat_map and it works with nested arrays' do
     Seq.new([[1,2],[3,4],[5]]).flat_map {|i| i }.to_a.should eq([1,2,3,4,5])
@@ -111,6 +115,10 @@ describe Seq do
       count += 1
     end
     count.should eq(3)
+  end
+  it 'has #group_by' do
+    expected = {3=>[3,3,3], 1=>[1,1,1], 2=>[2,2]}
+    Seq.new([1,1,1,2,3,2,3,3]).group_by {|i| i }.to_hash.should eq(expected)
   end
   it 'has #head' do
     Seq.new(one_to_five).head.should eq(1)
@@ -188,14 +196,8 @@ describe Seq do
   it 'has #patch' do
     Seq.new([5,2,3,1,4,2,3]).patch(3,[111,222],3).to_a.should eq([5,2,3,111,222,3])
   end
-  it 'has #reduce_left' do
-  end
-  it 'has #reduce_right' do
-  end
   it 'has #reverse' do
     Seq.new([1,2,3]).reverse.to_a.should eq([3,2,1])
-  end
-  it 'has #reverse_iterator' do
   end
   it 'has #reverse_map' do
     Seq.new([1,2,3]).reverse_map {|i| i + i }.to_a.should eq([6,4,2])
@@ -264,6 +266,9 @@ describe Seq do
   it 'has #union' do
     Seq.new([1,2,3]).union([2,3,4]).to_a.should eq([1,2,3,2,3,4])
   end
+  it 'has #updated' do
+    Seq.new([1,2,3]).updated(1,999).to_a.should eq([1,999,3])
+  end
   it 'has #zip' do
     Seq.new([1,2,3]).zip([2,3]).to_a.should eq([[1,2],[2,3]])
     Seq.new([1,2,3]).zip([2,3,4]).to_a.should eq([[1,2],[2,3],[3,4]])
@@ -273,8 +278,5 @@ describe Seq do
     Seq.new([]).zip_with_index.to_a.should eq([])
     Seq.new([1,2,3]).zip_with_index.to_a.should eq([[1,0],[2,1],[3,2]])
   end
+
 end
-
-
-
-

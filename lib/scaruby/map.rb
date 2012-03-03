@@ -102,7 +102,25 @@ module Scaruby
     end
 
     def map(&block)
+      #Map.new(Hash[*@hash.to_a.collect {|k,v| yield k, v }.flatten])
       Map.new(Hash[*@hash.to_a.map {|k,v| yield k, v }.flatten])
+    end
+
+    def minus(*keys)
+      copied = @hash.dup
+      keys.each do |key|
+        copied.delete(key)
+      end
+      Map.new(copied)
+    end
+
+    def plus(elems)
+      copied = @hash.dup
+      elems.each do |elm|
+        k,v = elm[0], elm[1]
+        copied[k] = v
+      end
+      Map.new(copied)
     end
 
     def mk_string(*args)
@@ -122,6 +140,16 @@ module Scaruby
 
     def non_empty
       ! is_empty
+    end
+
+    def updated(k, v)
+      copied = @hash.dup
+      copied[k] = v
+      Map.new(copied)
+    end
+
+    def unzip
+      Seq.new([@hash.keys,@hash.values])
     end
 
   end

@@ -67,6 +67,9 @@ describe Map do
     new_map = Map.new(hash).map {|k,v| [k+k,v] }.to_hash
     new_map.include?(246).should eq(true)
   end
+  it 'has #minus' do
+    Map.new(hash).minus(123,234,345).to_hash.should eq({4=>'d',56=>'ef',7=>'g',89=>'hi'})
+  end
   it 'has #mk_string' do
     Map.new(hash).mk_string().should eq('{123=>abc, 234=>bcd, 345=>cde, 4=>d, 56=>ef, 7=>g, 89=>hi}')
   end
@@ -75,7 +78,16 @@ describe Map do
     Map.new({}).non_empty.should eq(false)
     Map.new(nil).non_empty.should eq(false)
   end
+  it 'has #plus' do
+    Map.new({123=>'abc',234=>'bcd'}).plus([[345,'cde']]).to_hash.should eq({123=>'abc',234=>'bcd',345=>'cde'})
+  end
+  it 'has #updated' do
+    Map.new({123=>'abc',234=>'bcd'}).updated(345,'cde').to_hash.should eq({123=>'abc',234=>'bcd',345=>'cde'})
+  end
+  it 'has #unzip' do
+    unzipped = Map.new({123=>'abc',234=>'bcd'}).unzip.to_a
+    unzipped[0].should eq([123,234])
+    unzipped[1].should eq(['abc','bcd'])
+  end
 end
-
-
 
