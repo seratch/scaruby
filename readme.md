@@ -40,8 +40,10 @@ irb(main):003:0> Seq.new([1,2,3]).fold_left(0) {|z,x| z + x }
 
 irb(main):001:0> require 'enumerable_to_scaruby'
 => true
-irb(main):002:0> [[1,2,3],[4,5],[6]].flat_map {|e| e }
-=> [1, 2, 3, 4, 5, 6]
+irb(main):002:0> 1.upto(5).filter {|i| i < 3 }
+=> #<Scaruby::Seq:0x8d43cdc @array=[1, 2]>
+irb(main):003:0> 1.upto(5).filter {|i| i < 3 }.to_a
+=> [1, 2]
 ```
 
 ## License
