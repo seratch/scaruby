@@ -1,5 +1,7 @@
 # Scala API in Ruby
 
+https://rubygems.org/gems/scaruby
+
 Surely it works fine. 
 
 But it mainly serves as a Ruby reference for Scala programmers.
