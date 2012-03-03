@@ -59,9 +59,12 @@ module Scaruby
     def find(&predicate)
       Option.new(@hash.inject([false,[]]) {|z,kv|
         found, matched_kv = z[0], z[1]
-        if found then z
-        elsif yield kv[0], kv[1] then [true,kv]
-        else [false,[]]
+        if found then 
+          z
+        elsif yield kv[0], kv[1] then 
+          [true,kv]
+        else 
+          [false,[]]
         end
       }[1])
     end
@@ -109,7 +112,7 @@ module Scaruby
       when 1
         start_part, sep, end_part = '', args[0], ''
       when 2
-        raise 'Illegal number of arguments'
+        raise 'Illegal number of arguments (2)'
       else
         start_part, sep, end_part = args[0], args[1], args[2]
       end
