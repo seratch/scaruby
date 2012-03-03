@@ -2,6 +2,13 @@
 
 module Scaruby
   class Seq
+    include Enumerable
+
+    def each(&block)
+      @array.each do |e|
+        yield e
+      end
+    end
   
     def self.apply(enumerable)
       Seq.new(enumerable)
@@ -32,7 +39,7 @@ module Scaruby
     end
   
     def count(&predicate)
-      filter(&predicate).size
+      @array.count(&predicate)
     end
   
     def diff(that)
@@ -81,13 +88,7 @@ module Scaruby
     end
 
     def exists(&predicate)
-      @array.inject(false) {|found,e| 
-        if found then 
-          true 
-        else 
-          yield e 
-        end
-      }
+      @array.any?(&predicate)
     end
 
     def filter(&predicate)
@@ -138,13 +139,7 @@ module Scaruby
     end
 
     def forall(&predicate)
-      @array.inject(true) {|all_matched,e|
-        if ! all_matched then
-          false
-        else
-          yield e
-        end
-      }
+      @array.all?(&predicate)
     end
 
     def foreach(&block)
@@ -238,11 +233,12 @@ module Scaruby
     end
 
     def partition(&predicate)
-      Seq.new(@array.inject([[],[]]) {|z,x|
-        if yield x then 
-          [z[0].push(x),z[1]]
-        else 
-          [z[0],z[1].push(x)] 
+      Seq.new(@array.chunk(&predicate).inject([[],[]]) {|z, matched_and_elm|
+        matched, elm = matched_and_elm[0], matched_and_elm[1][0]
+        if matched then
+          [z[0].push(elm), z[1]]
+        else
+          [z[0],z[1].push(elm)]
         end
       })
     end

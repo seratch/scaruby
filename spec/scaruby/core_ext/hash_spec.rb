@@ -2,7 +2,7 @@
 
 require 'scaruby/core_ext'
 
-describe Map do
+describe Hash do
 
   hash = {123 => 'abc', 234 => 'bcd', 345 => 'cde', 4 => 'd', 56 => 'ef', 7 => 'g', 89 => 'hi' }
 

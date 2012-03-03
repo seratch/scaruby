@@ -10,6 +10,20 @@ describe Map do
     map = Map.new({1 => 'a', 2 => 'b'})
     map.should_not eq(nil)
   end 
+
+  # as a sub type of Hash
+  it 'has #each' do
+    expected_key = 1
+    expected_value = 10
+    Map.new({1=>10,2=>20}).each do |k,v|
+      k.should eq(expected_key)
+      v.should eq(expected_value)
+      expected_key += 1
+      expected_value += 10
+    end
+  end
+
+  # defined
   it 'has #contains' do
     Map.new(hash).contains(123).should eq(true)
     Map.new(hash).contains(999).should eq(false)

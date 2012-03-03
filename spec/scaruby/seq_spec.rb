@@ -17,6 +17,21 @@ describe Seq do
     rescue ArgumentError
     end
   end
+
+  # as a sub type of Enumerable
+  it 'has #each' do
+    expected = 0
+    Seq.new([0,1,2,3]).each do |e|
+      e.should eq(expected)
+      expected += 1
+    end
+  end
+  it 'has #all?' do
+    Seq.new([1,2,3]).all? {|e| e < 4 }.should eq(true)
+    Seq.new([1,2,3]).all? {|e| e > 2 }.should eq(false)
+  end
+
+  # defined 
   it 'has #to_a' do
     Seq.new(one_to_five).to_a.should eq([1,2,3,4,5])
   end

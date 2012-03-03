@@ -46,9 +46,29 @@ irb(main):026:0> Map.new({123=>'abc',23=>'bc',345=>'cde'}).filter {|k,v| k.to_s.
 => {123=>"abc", 345=>"cde"}
 ```
 
-You can extend Ruby with Scaruby. If the method is missing, the method in Scaruby will be invoked.
+`scaruby/converter` might be useful.
 
-Already defined methods (i.e. flat_map, find and so on) are never replaced.
+```ruby
+irb(main):001:0> require 'scaruby/converter'
+=> true
+irb(main):002:0> 'abc'.to_option.is_defined
+=> true
+irb(main):003:0> 'abc'.to_option.get_or_else('zzz')
+=> "abc"
+irb(main):004:0> nil.to_option.is_defined
+=> false
+irb(main):005:0> [1,2,3].to_scaruby.foreach do |e| puts e end
+1
+2
+3
+=> [1, 2, 3]
+```
+
+It is also possible to extend Ruby with Scaruby. 
+
+If the method is missing, the method in Scaruby will be invoked.
+
+In this case, the methods already defined (i.e. flat_map, find and so on) are never replaced.
 
 ```ruby
 irb(main):015:0> require 'scaruby/core_ext'
@@ -69,5 +89,7 @@ irb(main):027:0> {123=>'abc',23=>'bc',345=>'cde'}.filter {|k,v| k.to_s.size == 3
 ## License
 
 MIT License
+
+https://github.com/seratch/scaruby/blob/master/LICENSE.txt
 
 

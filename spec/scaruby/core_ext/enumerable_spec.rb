@@ -2,7 +2,7 @@
 
 require 'scaruby/core_ext'
 
-describe Seq do
+describe Enumerable do
 
   one_to_five = 1.upto 5
   one_to_five_shuffled = one_to_five.sort_by {rand}

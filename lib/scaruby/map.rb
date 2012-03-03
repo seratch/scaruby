@@ -1,7 +1,13 @@
 # -*- encoding: utf-8 -*-
 
 module Scaruby
-  class Map
+  class Map < Hash
+
+    def each(&block)
+      @hash.each do |k,v|
+        yield k, v
+      end
+    end
 
     def self.empty
       {}
