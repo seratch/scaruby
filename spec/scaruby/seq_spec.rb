@@ -73,7 +73,24 @@ describe Seq do
     Seq.new([1,2,nil,3]).flat_map {|i| Option.new(i) }.to_a.should eq([1,2,3])
   end
   it 'has #fold_left' do
-    Seq.new(one_to_five_shuffled).fold_left(0) {|z,x| z + x }.should eq(15)
+    input = [1,2,3]
+    expected = [1,2,3]
+    idx = 0
+    Seq.new(input).fold_left(0) {|z,x| 
+      x.should eq(expected[idx])
+      idx += 1
+      z + x 
+    }.should eq(6)
+  end
+  it 'has #fold_right' do
+    input = [1,2,3]
+    expected = [3,2,1]
+    idx = 0
+    Seq.new(input).fold_right(0) {|z,x| 
+      x.should eq(expected[idx])
+      idx += 1
+      z + x 
+    }.should eq(6)
   end
   it 'has #flatten' do
     Seq.new([[1,2],[3,4],[5]]).flatten.to_a.should eq([1,2,3,4,5])

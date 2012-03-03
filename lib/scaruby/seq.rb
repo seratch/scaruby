@@ -42,9 +42,12 @@ module Scaruby
     def drop_while(&predicate)
       Seq.new(@array.inject([false,[]]) {|passed,x|
         no_need_to_yield, result = passed[0], passed[1]
-        if no_need_to_yield then [true, result.push(x)]
-        elsif yield x then passed
-        else [true, result.push(x)] 
+        if no_need_to_yield then 
+          [true, result.push(x)]
+        elsif yield x then 
+          passed
+        else 
+          [true, result.push(x)] 
         end
       }[1])
     end
@@ -55,17 +58,22 @@ module Scaruby
       end
       this_end = @array.reverse.take(that.length).reverse
       this_end.zip(that).inject(true) {|all_matched,a| 
-        if ! all_matched then false
-        elsif a.length != 2 then false
-        else a[0] == a[1] 
+        if ! all_matched then 
+          false
+        elsif a.length != 2 then 
+          false
+        else 
+          a[0] == a[1] 
         end
       }
     end
 
     def exists(&predicate)
       @array.inject(false) {|found,e| 
-        if found then true
-        else yield e 
+        if found then 
+          true 
+        else 
+          yield e 
         end
       }
     end
@@ -89,7 +97,8 @@ module Scaruby
           applied.inject(z) {|z,elm| z.push(elm) }
         elsif applied.is_a?(Option) then 
           applied.is_defined ? z.push(applied.get) : z
-        else z.push(applied) 
+        else 
+          z.push(applied) 
         end
       })
     end
@@ -110,16 +119,24 @@ module Scaruby
       @array.inject(z) {|z,x| yield z, x }
     end
 
+    def fold_right(z, &block)
+      @array.reverse.inject(z) {|z,x| yield z, x }
+    end
+
     def forall(&predicate)
       @array.inject(true) {|all_matched,e|
-        if ! all_matched then false
-        else yield e 
+        if ! all_matched then
+          false
+        else
+          yield e
         end
       }
     end
 
     def foreach(&block)
-      @array.each do |e| yield e end
+      @array.each do |e| 
+        yield e 
+      end
     end
   
     def head
@@ -197,8 +214,10 @@ module Scaruby
 
     def partition(&predicate)
       Seq.new(@array.inject([[],[]]) {|z,x|
-        if yield x then [z[0].push(x),z[1]]
-        else [z[0],z[1].push(x)] 
+        if yield x then 
+          [z[0].push(x),z[1]]
+        else 
+          [z[0],z[1].push(x)] 
         end
       })
     end
@@ -221,9 +240,12 @@ module Scaruby
 
     def same_elements(that)
       @array.zip(that).inject(true) {|still_same,a|
-        if ! still_same then false
-        elsif a.length != 2 then false
-        else a[0] == a[1] 
+        if ! still_same then 
+          false
+        elsif a.length != 2 then 
+          false
+        else 
+          a[0] == a[1] 
         end
       }
     end
@@ -269,9 +291,12 @@ module Scaruby
     def span(&predicate)
       result = @array.inject([true,[],[]]) {|z,x|
         still_matched, first, second = z[0], z[1], z[2]
-        if ! still_matched then [false,first,second.push(x)]
-        elsif yield x then [true,first.push(x),second]
-        else [false,first,second.push(x)] 
+        if ! still_matched then 
+          [false,first,second.push(x)]
+        elsif yield x then 
+          [true,first.push(x),second]
+        else 
+          [false,first,second.push(x)] 
         end
       }
       Seq.new([result[1],result[2]])
@@ -287,9 +312,12 @@ module Scaruby
       end
       this_start = @array.take(that.length)
       this_start.zip(that).inject(true) {|all_matched,a|
-        if ! all_matched then false
-        elsif a.length != 2 then false
-        else a[0] == a[1]
+        if ! all_matched then 
+          false
+        elsif a.length != 2 then 
+          false
+        else 
+          a[0] == a[1]
         end
       }
     end
@@ -313,9 +341,12 @@ module Scaruby
     def take_while(&predicate)
       Seq.new(@array.inject([false,[]]) {|passed,x|
         is_already_unmatched, result = passed[0], passed[1]
-        if is_already_unmatched then passed
-        elsif yield x then [false,result.push(x)]
-        else [true, result] 
+        if is_already_unmatched then 
+          passed
+        elsif yield x then 
+          [false,result.push(x)]
+        else 
+          [true, result] 
         end
       }[1])
     end
@@ -330,7 +361,9 @@ module Scaruby
 
     def zip_with_index
       with_index = []
-      @array.each_with_index do |v,idx| with_index.push([v,idx]) end
+      @array.each_with_index do |v,idx| 
+        with_index.push([v,idx]) 
+      end
       with_index
     end
   
