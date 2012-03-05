@@ -15,12 +15,13 @@ describe Map do
   it 'has #each' do
     expected_key = 1
     expected_value = 10
-    Map.new({1=>10,2=>20}).each do |k,v|
+    returned = Map.new({1=>10,2=>20}).each do |k,v|
       k.should eq(expected_key)
       v.should eq(expected_value)
       expected_key += 1
       expected_value += 10
     end
+    returned.should eq(nil)
   end
 
   # defined
@@ -54,9 +55,10 @@ describe Map do
     Map.new(hash).forall {|k,v| k.to_s.length >= 2 }.should eq(false)
   end
   it 'has #foreach' do
-    Map.new(hash).foreach do |k,v| 
+    returned = Map.new(hash).foreach do |k,v| 
       hash.include?(k).should eq(true)
     end
+    returned.should eq(nil)
   end
   it 'has #get_or_else' do
     Map.new(hash).get_or_else(123, 'xxx').should eq('abc')

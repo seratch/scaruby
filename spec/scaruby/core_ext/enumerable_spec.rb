@@ -110,10 +110,11 @@ describe Enumerable do
   end
   it 'has #foreach' do
     count = 0
-    ([1,2,3]).foreach do |i| 
+    returned = ([1,2,3]).foreach do |i| 
       count += 1
     end
     count.should eq(3)
+    returned.should eq(nil)
   end
   it 'has #group_by' do
     expected = {3=>[3,3,3], 1=>[1,1,1], 2=>[2,2]}

@@ -7,6 +7,7 @@ module Scaruby
       @hash.each do |k,v|
         yield k, v
       end
+      nil
     end
 
     def self.empty
@@ -87,7 +88,10 @@ module Scaruby
     end
 
     def foreach(&block)
-      @hash.each do |k,v| yield k, v end
+      @hash.each do |k,v| 
+        yield k, v 
+      end
+      nil
     end
 
     def get_or_else(key, default_value)

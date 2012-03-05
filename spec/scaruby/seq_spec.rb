@@ -21,10 +21,11 @@ describe Seq do
   # as a sub type of Enumerable
   it 'has #each' do
     expected = 0
-    Seq.new([0,1,2,3]).each do |e|
+    returned = Seq.new([0,1,2,3]).each do |e|
       e.should eq(expected)
       expected += 1
     end
+    returned.should eq(nil)
   end
   it 'has #all?' do
     Seq.new([1,2,3]).all? {|e| e < 4 }.should eq(true)
@@ -126,10 +127,11 @@ describe Seq do
   end
   it 'has #foreach' do
     count = 0
-    Seq.new([1,2,3]).foreach do |i| 
+    returned = Seq.new([1,2,3]).foreach do |i| 
       count += 1
     end
     count.should eq(3)
+    returned.should eq(nil)
   end
   it 'has #group_by' do
     expected = {3=>[3,3,3], 1=>[1,1,1], 2=>[2,2]}

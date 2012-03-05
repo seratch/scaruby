@@ -8,6 +8,7 @@ module Scaruby
       @array.each do |e|
         yield e
       end
+      nil
     end
   
     def self.apply(enumerable)
@@ -146,6 +147,7 @@ module Scaruby
       @array.each do |e| 
         yield e 
       end
+      nil
     end
 
     def group_by(&block) 
