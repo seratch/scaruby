@@ -31,24 +31,11 @@ module Scaruby
     end
 
     def count(&predicate)
-      count = 0
-      @hash.each do |k,v|
-        if yield k, v then 
-          count += 1
-        end
-      end
-      count
+      @hash.count(&predicate)
     end
 
     def exists(&predicate)
-      @hash.to_a.inject(false) {|found,kv|
-        if found then 
-          true
-        else 
-          k, v = kv[0], kv[1]
-          yield k, v
-        end
-      }
+      @hash.any?(&predicate)
     end
 
     def filter(&predicate)
@@ -64,27 +51,11 @@ module Scaruby
     end
 
     def find(&predicate)
-      Option.new(@hash.inject([false,[]]) {|z,kv|
-        found, matched_kv = z[0], z[1]
-        if found then 
-          z
-        elsif yield kv[0], kv[1] then 
-          [true,kv]
-        else 
-          [false,[]]
-        end
-      }[1])
+      Option.new(@hash.find(&predicate))
     end
 
     def forall(&predicate)
-      @hash.inject(true) {|still_matched,kv|
-        if !still_matched then 
-          false
-        else 
-          k, v = kv[0], kv[1]
-          yield k, v
-        end
-      }
+      @hash.all?(&predicate)
     end
 
     def foreach(&block)

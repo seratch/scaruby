@@ -8,4 +8,3 @@ module Scaruby
   end
 end
 
-
