@@ -246,10 +246,9 @@ module Scaruby
     end
 
     def patch(from, patch, replaced) 
-      Seq.new(
-        @array.take(from)
-          .concat(patch)
-          .concat(@array.drop(from).drop(replaced)))
+      # -- compatible with Ruby 1.8.7
+      #Seq.new(@array.take(from).concat(patch).concat(@array.drop(from).drop(replaced)))
+      Seq.new(@array.take(from) + patch + @array.drop(from).drop(replaced))
     end
 
     def reverse
