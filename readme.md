@@ -25,7 +25,7 @@ bundle console
 ```
 
 ```ruby
-irb(main):008:0>  require 'scaruby'
+irb(main):008:0> require 'scaruby'
 => false
 
 irb(main):009:0> Option.new(nil).is_defined
@@ -75,9 +75,9 @@ In this case, the methods already defined (i.e. flat_map, find and so on) are ne
 ```ruby
 irb(main):015:0> require 'scaruby/core_ext'
 => true
-irb(main):016:0>  1.upto(5).filter {|i| i < 3 }
+irb(main):016:0> 1.upto(5).filter {|i| i < 3 }
 => [1, 2]
-irb(main):020:0>  1.upto(5).filter {|i| i < 3 }.foreach do |i|
+irb(main):020:0> 1.upto(5).filter {|i| i < 3 }.foreach do |i|
 irb(main):021:1*   puts i
 irb(main):022:1> end
 1
