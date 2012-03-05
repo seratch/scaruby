@@ -1,6 +1,7 @@
 # -*- encoding: utf-8 -*-
 
 require 'scaruby/appliable_proc'
+require 'scaruby/converter'
 require 'scaruby/map'
 require 'scaruby/no_such_element_exception'
 require 'scaruby/option'
