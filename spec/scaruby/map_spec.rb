@@ -45,7 +45,7 @@ describe Map do
     Map.new(hash).filter_keys {|k| k.to_s.length < 3 }.to_hash.size.should eq(4)
   end
   it 'has #filter_not' do
-    Map.new(hash).filter_not {|k| k.to_s.length < 3 }.to_hash.to_s.should eq('{123=>"abc", 234=>"bcd", 345=>"cde"}')
+    Map.new(hash).filter_not {|k,v| k.to_s.length < 3 }.to_hash.to_s.should eq('{123=>"abc", 234=>"bcd", 345=>"cde"}')
   end
   it 'has #find' do
     Map.new(hash).find {|k,v| k.to_s.length == 2 }.get[1].should eq('ef')
