@@ -6,6 +6,12 @@ Surely it works fine.
 
 But it mainly serves as a Ruby reference for Scala programmers.
 
+
+## Supported Ruby versions
+
+Scaruby runs on Ruby 1.9.2, 1.9.3.
+
+
 ## Gemfile
 
 ```
@@ -14,9 +20,11 @@ source "http://rubygems.org/"
 gem 'scaruby'
 ```
 
+
 ## Usage
 
 See specs.
+
 
 ## Trying on irb
 
