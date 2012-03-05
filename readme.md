@@ -88,6 +88,12 @@ irb(main):027:0> {123=>'abc',23=>'bc',345=>'cde'}.filter {|k,v| k.to_s.size == 3
 => {123=>"abc", 345=>"cde"}
 ```
 
+
+## Build Status
+
+[![Build Status](https://secure.travis-ci.org/seratch/scaruby.png)](http://travis-ci.org/seratch/scaruby)
+
+
 ## License
 
 MIT License
