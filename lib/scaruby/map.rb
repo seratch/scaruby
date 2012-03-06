@@ -3,6 +3,8 @@
 module Scaruby
   class Map < Hash
 
+    attr :hash
+    
     def each(&block)
       @hash.each do |k,v|
         yield k, v
@@ -15,6 +17,7 @@ module Scaruby
     end
 
     def initialize(hash)
+      assert_type(hash, Hash)
       @hash = hash
     end
 

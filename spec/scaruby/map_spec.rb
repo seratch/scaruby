@@ -6,6 +6,14 @@ describe Map do
 
   hash = {123 => 'abc', 234 => 'bcd', 345 => 'cde', 4 => 'd', 56 => 'ef', 7 => 'g', 89 => 'hi' }
 
+  it 'does not accept invalid args' do
+    begin
+      map = Map.new(1234)
+      raise 'Expected exception did not be raised!'
+    rescue AssertionError
+    end
+  end
+
   it 'has self.new' do
     map = Map.new({1 => 'a', 2 => 'b'})
     map.should_not eq(nil)

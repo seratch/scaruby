@@ -7,6 +7,7 @@ module Scaruby
     attr_accessor :result, :mutex
 
     def initialize(mutex)
+      assert_type(mutex, Mutex)
       @mutex = mutex
       @result = nil
     end

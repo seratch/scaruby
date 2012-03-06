@@ -12,6 +12,25 @@ require 'scaruby/version'
 
 module Scaruby
 
+  module Commons
+
+    def assert_type(v, *types)
+      is_matched = false
+      unless v.nil? then
+        found = types.inject(false) {|found,type|
+          if found then true
+          else v.is_a?(type)
+          end
+        }
+        unless found then
+          raise AssertionError, 
+            "The type of `#{v}` should be whichever of [#{types.join(', ')}] but actually #{v.class}."
+        end
+      end
+    end
+
+  end
+
   module Predef
 
     def assert(assertion)
@@ -33,6 +52,7 @@ module Scaruby
 end
 
 include Scaruby
+include Scaruby::Commons
 include Scaruby::Predef
 
 

@@ -7,12 +7,11 @@ module Scaruby
   module IO
     class Source
 
+      attr :string_io
+
       def initialize(string_io)
-        if string_io.is_a?(StringIO) then
-          @string_io = string_io
-        else
-          raise ArgumentError, 'The argument should be a StringIO object.'
-        end
+        assert_type(string_io, StringIO)
+        @string_io = string_io
       end
 
       def self.from_bytes(bytes, encoding='UTF-8')

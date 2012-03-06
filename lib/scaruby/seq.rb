@@ -4,6 +4,8 @@ module Scaruby
   class Seq
     include Enumerable
 
+    attr :array
+
     def each(&block)
       @array.each do |e|
         yield e
@@ -16,11 +18,8 @@ module Scaruby
     end
 
     def initialize(enumerable)
-      if enumerable.nil? || enumerable.is_a?(Enumerable) then
-        @array = enumerable.to_a
-      else 
-        raise ArgumentError, 'Invalid argument (' + enumerable.to_s + ')'
-      end
+      assert_type(enumerable, Enumerable)
+      @array = enumerable.to_a
     end
 
     def to_a

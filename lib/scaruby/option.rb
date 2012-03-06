@@ -3,6 +3,8 @@
 module Scaruby
   class Option
 
+    attr :value
+
     def self.apply(value)
       Option.new(value)
     end

@@ -10,11 +10,13 @@ describe Seq do
   it 'does not accept invalid args' do
     begin
       Seq.new('aaaa').should eq(nil)
-    rescue ArgumentError
+      raise 'Expected exception did not be raised!'
+    rescue AssertionError
     end
     begin
       Seq.new(12345).should eq(nil)
-    rescue ArgumentError
+      raise 'Expected exception did not be raised!'
+    rescue AssertionError
     end
   end
 
