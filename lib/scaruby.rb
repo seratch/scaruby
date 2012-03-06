@@ -15,7 +15,6 @@ module Scaruby
   module Commons
 
     def assert_type(v, *types)
-      is_matched = false
       unless v.nil? then
         found = types.inject(false) {|found,type|
           if found then true
