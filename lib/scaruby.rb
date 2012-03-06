@@ -3,22 +3,36 @@
 require 'scaruby/appliable_proc'
 require 'scaruby/concurrent'
 require 'scaruby/converter'
+require 'scaruby/io'
 require 'scaruby/map'
-require 'scaruby/no_such_element_exception'
+require 'scaruby/exception'
 require 'scaruby/option'
 require 'scaruby/seq'
 require 'scaruby/version'
 
 module Scaruby
+
+  module Predef
+
+    def assert(assertion)
+      unless assertion then
+        raise AssertionError, 'Assertion failed'
+      end
+    end
+
+    def println(any)
+      puts any.to_s
+    end
+
+    def read_line
+      input = readline
+      input.sub(/\r?\n/, '')
+    end
+
+  end
 end
 
-# alias
-class AppliableProc < Scaruby::AppliableProc
-end
-class Map < Scaruby::Map
-end
-class Option < Scaruby::Option
-end
-class Seq < Scaruby::Seq 
-end
+include Scaruby
+include Scaruby::Predef
+
 

@@ -170,7 +170,7 @@ module Scaruby
     end
 
     def indices
-      Seq.new(0.upto @array.length-1)
+      Seq.new(0.upto(@array.length-1))
     end
 
     def init
@@ -236,7 +236,7 @@ module Scaruby
 
     def partition(&predicate)
       Seq.new(@array.chunk(&predicate).inject([[],[]]) {|z, matched_and_elm|
-        matched, elm = matched_and_elm[0], matched_and_elm[1][0]
+        matched, elm = matched_and_elm[0], matched_and_elm[1].first
         if matched then
           [z[0].push(elm), z[1]]
         else
@@ -246,7 +246,6 @@ module Scaruby
     end
 
     def patch(from, patch, replaced) 
-      # -- compatible with Ruby 1.8.7
       #Seq.new(@array.take(from).concat(patch).concat(@array.drop(from).drop(replaced)))
       Seq.new(@array.take(from) + patch + @array.drop(from).drop(replaced))
     end

@@ -1,7 +1,5 @@
 # -*- encoding: utf-8 -*-
 
-require 'scaruby/no_such_element_exception'
-
 module Scaruby
   class Option
 
