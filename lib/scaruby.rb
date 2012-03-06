@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 
 require 'scaruby/appliable_proc'
-require 'scaruby/concurrent_ops'
+require 'scaruby/concurrent'
 require 'scaruby/converter'
 require 'scaruby/map'
 require 'scaruby/no_such_element_exception'
