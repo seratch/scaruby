@@ -12,8 +12,8 @@ describe Scaruby do
     rescue AssertionError => e
       e.message.should eq('The type of `123` should be whichever of [Hash, Array] but actually Fixnum.')
     end
-    assert_type([1,2,3], Array)
-    assert_type({1=>'a'}, Hash)
+    assert_type([1, 2, 3], Array)
+    assert_type({1 => 'a'}, Hash)
     assert_type(nil, Array)
     assert_type(nil, Hash)
   end
@@ -26,7 +26,7 @@ describe Scaruby do
     end
   end
   it 'has converter' do
-    [1,2,3].to_scaruby.should_not eq(nil)
+    [1, 2, 3].to_scaruby.should_not eq(nil)
   end
 end
 

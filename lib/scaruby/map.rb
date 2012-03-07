@@ -4,9 +4,9 @@ module Scaruby
   class Map < Hash
 
     attr :hash
-    
+
     def each(&block)
-      @hash.each do |k,v|
+      @hash.each do |k, v|
         yield k, v
       end
       nil
@@ -42,15 +42,15 @@ module Scaruby
     end
 
     def filter(&predicate)
-      Map.new(@hash.reject {|k,v| ! yield k, v })
+      Map.new(@hash.reject { |k, v| !yield k, v })
     end
 
     def filter_keys(&predicate)
-      Map.new(@hash.reject {|k,v| ! yield k })
+      Map.new(@hash.reject { |k, v| !yield k })
     end
 
     def filter_not(&predicate)
-      Map.new(@hash.reject {|k,v| yield k, v })
+      Map.new(@hash.reject { |k, v| yield k, v })
     end
 
     def find(&predicate)
@@ -62,8 +62,8 @@ module Scaruby
     end
 
     def foreach(&block)
-      @hash.each do |k,v| 
-        yield k, v 
+      @hash.each do |k, v|
+        yield k, v
       end
       nil
     end
@@ -82,12 +82,12 @@ module Scaruby
     end
 
     def lift
-      AppliableProc.new {|k| Option.new(@hash[k]) }
+      AppliableProc.new { |k| Option.new(@hash[k]) }
     end
 
     def map(&block)
       #Map.new(Hash[*@hash.to_a.collect {|k,v| yield k, v }.flatten])
-      Map.new(Hash[*@hash.to_a.map {|k,v| yield k, v }.flatten])
+      Map.new(Hash[*@hash.to_a.map { |k, v| yield k, v }.flatten])
     end
 
     def minus(*keys)
@@ -101,7 +101,7 @@ module Scaruby
     def plus(elems)
       copied = @hash.dup
       elems.each do |elm|
-        k,v = elm[0], elm[1]
+        k, v = elm[0], elm[1]
         copied[k] = v
       end
       Map.new(copied)
@@ -109,21 +109,21 @@ module Scaruby
 
     def mk_string(*args)
       case args.size
-      when 0
-        start_part, sep, end_part = '{', ', ', '}'
-      when 1
-        start_part, sep, end_part = '', args[0], ''
-      when 2
-        raise 'Illegal number of arguments (2)'
-      else
-        start_part, sep, end_part = args[0], args[1], args[2]
+        when 0
+          start_part, sep, end_part = '{', ', ', '}'
+        when 1
+          start_part, sep, end_part = '', args[0], ''
+        when 2
+          raise 'Illegal number of arguments (2)'
+        else
+          start_part, sep, end_part = args[0], args[1], args[2]
       end
       #start_part + @hash.to_a.collect {|k,v| k.to_s + '=>' + v.to_s }.join(sep) + end_part
-      start_part + @hash.to_a.map {|k,v| k.to_s + '=>' + v.to_s }.join(sep) + end_part
+      start_part + @hash.to_a.map { |k, v| k.to_s + '=>' + v.to_s }.join(sep) + end_part
     end
 
     def non_empty
-      ! is_empty
+      !is_empty
     end
 
     def updated(k, v)
@@ -133,7 +133,7 @@ module Scaruby
     end
 
     def unzip
-      Seq.new([@hash.keys,@hash.values])
+      Seq.new([@hash.keys, @hash.values])
     end
 
   end

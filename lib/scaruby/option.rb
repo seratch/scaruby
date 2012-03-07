@@ -18,10 +18,10 @@ module Scaruby
     end
 
     def get
-      if is_defined then 
-        @value 
-      else 
-        raise NoSuchElementException 
+      if is_defined then
+        @value
+      else
+        raise NoSuchElementException
       end
     end
 
@@ -29,7 +29,7 @@ module Scaruby
       is_defined ? get : default_value
     end
 
-    def map(&block) 
+    def map(&block)
       is_defined ? Option.new(yield @value) : self
     end
 

@@ -6,7 +6,7 @@ describe Option do
   it 'has self.new' do
     some = Option.new(123)
     some.is_defined.should eq(true)
-  end 
+  end
   it 'has #get and it works with Some' do
     some = Option.new(123)
     some.get.should eq(123)
@@ -29,12 +29,12 @@ describe Option do
   end
   it 'has #map and it works with Some' do
     some = Option.new(123)
-    some_result = some.map {|v| v + v }
+    some_result = some.map { |v| v + v }
     some_result.get_or_else(999).should eq(246)
-  end 
+  end
   it 'has #map and it works with None' do
     none = Option.new(nil)
-    none_result = none.map {|v| v + v }
+    none_result = none.map { |v| v + v }
     none_result.get_or_else(999).should eq(999)
   end
 end

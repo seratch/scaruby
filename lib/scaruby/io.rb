@@ -35,7 +35,7 @@ module Scaruby
         http.use_ssl = uri.is_a?(URI::HTTPS)
         http.verify_mode = OpenSSL::SSL::VERIFY_NONE
 
-        http.start {|http|
+        http.start { |http|
           req = Net::HTTP::Get.new(uri.request_uri)
           res = http.request(req)
           Source.new(StringIO.new(res.body))
@@ -43,7 +43,7 @@ module Scaruby
       end
 
       def get_lines
-        Seq.new(@string_io.map {|line| line })
+        Seq.new(@string_io.map { |line| line })
       end
 
       def to_seq

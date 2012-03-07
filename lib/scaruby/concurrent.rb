@@ -24,7 +24,7 @@ module Scaruby
 
     def spawn(&block)
       Thread.new do
-        yield 
+        yield
       end
     end
 

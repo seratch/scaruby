@@ -41,7 +41,7 @@ describe Scaruby::IO::Source do
     end
   end
   it 'has #get_lines' do
-    source = Source.from_url(http_url,'Shift_JIS')
+    source = Source.from_url(http_url, 'UTF-8')
     source.get_lines.foreach do |line|
       line.is_a?(String).should eq(true)
     end
