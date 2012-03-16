@@ -28,9 +28,9 @@ module Scaruby
 
     def corresponds(that, &predicate)
       @array.zip(that).inject(true) { |still_matched, e|
-        if !still_matched then
+        if !still_matched
           false
-        elsif yield e[0], e[1] then
+        elsif yield e[0], e[1]
           true
         else
           false
@@ -61,9 +61,9 @@ module Scaruby
     def drop_while(&predicate)
       Seq.new(@array.inject([false, []]) { |passed, x|
         no_need_to_yield, result = passed[0], passed[1]
-        if no_need_to_yield then
+        if no_need_to_yield
           [true, result.push(x)]
-        elsif yield x then
+        elsif yield x
           passed
         else
           [true, result.push(x)]
@@ -72,14 +72,14 @@ module Scaruby
     end
 
     def ends_with(that)
-      if that.nil? || that.length > @array.length then
+      if that.nil? || that.length > @array.length
         return false
       end
       this_end = @array.reverse.take(that.length).reverse
       this_end.zip(that).inject(true) { |all_matched, a|
-        if !all_matched then
+        if !all_matched
           false
-        elsif a.length != 2 then
+        elsif a.length != 2
           false
         else
           a[0] == a[1]
@@ -106,11 +106,11 @@ module Scaruby
     def flat_map(&block)
       Seq.new(@array.inject([]) { |z, x|
         applied = yield x
-        if applied.is_a?(Enumerable) then
+        if applied.is_a?(Enumerable)
           applied.inject(z) { |z, elm| z.push(elm) }
-        elsif applied.is_a?(Seq) then
+        elsif applied.is_a?(Seq)
           applied.to_a.inject(z) { |z, elm| z.push(elm) }
-        elsif applied.is_a?(Option) then
+        elsif applied.is_a?(Option)
           applied.is_defined ? z.push(applied.get) : z
         else
           z.push(applied)
@@ -120,9 +120,9 @@ module Scaruby
 
     def flatten
       Seq.new(@array.inject([]) { |z, x|
-        if x.is_a?(Enumerable) then
+        if x.is_a?(Enumerable)
           x.inject(z) { |z, elm| z.push(elm) }
-        elsif x.is_a?(Option) then
+        elsif x.is_a?(Option)
           x.is_defined ? z.push(x.get) : z
         else
           z.push(x)
@@ -151,7 +151,7 @@ module Scaruby
 
     def group_by(&block)
       Map.new(@array.inject({}) { |z, e|
-        if z[e].nil? then
+        if z[e].nil?
           z[e] = [e]
         else
           z[e] = z[e].push(e)
@@ -236,7 +236,7 @@ module Scaruby
     def partition(&predicate)
       Seq.new(@array.chunk(&predicate).inject([[], []]) { |z, matched_and_elm|
         matched, elm = matched_and_elm[0], matched_and_elm[1].first
-        if matched then
+        if matched
           [z[0].push(elm), z[1]]
         else
           [z[0], z[1].push(elm)]
@@ -260,9 +260,9 @@ module Scaruby
 
     def same_elements(that)
       @array.zip(that).inject(true) { |still_same, a|
-        if !still_same then
+        if !still_same
           false
-        elsif a.length != 2 then
+        elsif a.length != 2
           false
         else
           a[0] == a[1]
@@ -297,7 +297,7 @@ module Scaruby
     def sliding(len)
       result = []
       @array.each_with_index do |e, idx|
-        if idx < (@array.length - len + 1) then
+        if idx < (@array.length - len + 1)
           result.push(@array.slice(idx, len))
         end
       end
@@ -311,9 +311,9 @@ module Scaruby
     def span(&predicate)
       result = @array.inject([true, [], []]) { |z, x|
         still_matched, first, second = z[0], z[1], z[2]
-        if !still_matched then
+        if !still_matched
           [false, first, second.push(x)]
-        elsif yield x then
+        elsif yield x
           [true, first.push(x), second]
         else
           [false, first, second.push(x)]
@@ -327,14 +327,14 @@ module Scaruby
     end
 
     def starts_with(that)
-      if that.nil? || that.length > @array.length then
+      if that.nil? || that.length > @array.length
         return false
       end
       this_start = @array.take(that.length)
       this_start.zip(that).inject(true) { |all_matched, a|
-        if !all_matched then
+        if !all_matched
           false
-        elsif a.length != 2 then
+        elsif a.length != 2
           false
         else
           a[0] == a[1]
@@ -361,9 +361,9 @@ module Scaruby
     def take_while(&predicate)
       Seq.new(@array.inject([false, []]) { |passed, x|
         is_already_unmatched, result = passed[0], passed[1]
-        if is_already_unmatched then
+        if is_already_unmatched
           passed
-        elsif yield x then
+        elsif yield x
           [false, result.push(x)]
         else
           [true, result]

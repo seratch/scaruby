@@ -15,15 +15,15 @@ module Scaruby
   module Commons
 
     def assert_type(v, *types)
-      unless v.nil? then
+      unless v.nil?
         found = types.inject(false) { |found, type|
-          if found then
+          if found
             true
           else
             v.is_a?(type)
           end
         }
-        unless found then
+        unless found
           raise AssertionError,
                 "The type of `#{v}` should be whichever of [#{types.join(', ')}] but actually #{v.class}."
         end
@@ -35,7 +35,7 @@ module Scaruby
   module Predef
 
     def assert(assertion)
-      unless assertion then
+      unless assertion
         raise AssertionError, 'Assertion failed'
       end
     end

@@ -18,7 +18,7 @@ module Scaruby
     end
 
     def get
-      if is_defined then
+      if is_defined
         @value
       else
         raise NoSuchElementException
