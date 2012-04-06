@@ -13,6 +13,10 @@ module Scaruby
       @value = value
     end
 
+    def is_empty
+      @value == nil
+    end
+
     def is_defined
       @value != nil
     end
@@ -31,6 +35,10 @@ module Scaruby
 
     def map(&block)
       is_defined ? Option.new(yield @value) : self
+    end
+
+    def fold(if_empty, &block)
+      is_empty ? if_empty : yield(@value)
     end
 
   end
