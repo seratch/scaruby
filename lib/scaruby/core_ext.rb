@@ -2,6 +2,7 @@
 
 require 'scaruby/core_ext/enumerable.rb'
 require 'scaruby/core_ext/hash.rb'
+require 'scaruby/core_ext/proc.rb'
 
 module Scaruby
   module CoreExt
