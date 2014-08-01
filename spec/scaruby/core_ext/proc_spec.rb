@@ -10,19 +10,19 @@ describe Proc do
   twice = Proc.new { |v| "#{v} #{v}" }
 
   it "should have #apply" do
-    hello.apply().should ==("Hello!")
+    expect(hello.apply()).to eq("Hello!")
   end
 
   it "should have #compose" do
-    twice.compose(hello).apply().should ==("Hello! Hello!")
-    twice.compose(up).apply("Hello!").should ==("HELLO! HELLO!")
-    twice.compose(up_join).apply("Hello,", "World!").should ==("HELLO, WORLD! HELLO, WORLD!")
+    expect(twice.compose(hello).apply()).to eq("Hello! Hello!")
+    expect(twice.compose(up).apply("Hello!")).to eq("HELLO! HELLO!")
+    expect(twice.compose(up_join).apply("Hello,", "World!")).to eq("HELLO, WORLD! HELLO, WORLD!")
   end
 
   it "should have #and_then" do
-    hello.and_then(twice).apply().should ==("Hello! Hello!")
-    up.and_then(twice).apply("Hello!").should ==("HELLO! HELLO!")
-    up_join.and_then(twice).apply("Hello,", "World!").should ==("HELLO, WORLD! HELLO, WORLD!")
+    expect(hello.and_then(twice).apply()).to eq("Hello! Hello!")
+    expect(up.and_then(twice).apply("Hello!")).to eq("HELLO! HELLO!")
+    expect(up_join.and_then(twice).apply("Hello,", "World!")).to eq("HELLO, WORLD! HELLO, WORLD!")
   end
 
 end

@@ -16,7 +16,7 @@ describe Map do
 
   it 'has self.new' do
     map = Map.new({1 => 'a', 2 => 'b'})
-    map.should_not eq(nil)
+    expect(map).not_to eq(nil)
   end
 
   # as a sub type of Hash
@@ -24,94 +24,94 @@ describe Map do
     expected_key = 1
     expected_value = 10
     returned = Map.new({1 => 10, 2 => 20}).each do |k, v|
-      k.should eq(expected_key)
-      v.should eq(expected_value)
+      expect(k).to eq(expected_key)
+      expect(v).to eq(expected_value)
       expected_key += 1
       expected_value += 10
     end
-    returned.should eq(nil)
+    expect(returned).to eq(nil)
   end
 
   # defined
   it 'has #contains' do
-    Map.new(hash).contains(123).should eq(true)
-    Map.new(hash).contains(999).should eq(false)
+    expect(Map.new(hash).contains(123)).to eq(true)
+    expect(Map.new(hash).contains(999)).to eq(false)
   end
   it 'has #count' do
-    Map.new(hash).count { |k, v| k.to_s.length >= 2 }.should eq(5)
+    expect(Map.new(hash).count { |k, v| k.to_s.length >= 2 }).to eq(5)
   end
   it 'hash Map.empty' do
-    Map.empty.should eq({})
+    expect(Map.empty).to eq({})
   end
   it 'has #exists' do
-    Map.new(hash).exists { |k, v| k.to_s.length == 1 }.should eq(true)
+    expect(Map.new(hash).exists { |k, v| k.to_s.length == 1 }).to eq(true)
   end
   it 'has #filter' do
-    Map.new(hash).filter { |k, v| k.to_s.length < 3 }.to_hash.size.should eq(4)
+    expect(Map.new(hash).filter { |k, v| k.to_s.length < 3 }.to_hash.size).to eq(4)
   end
   it 'has #filter_keys' do
-    Map.new(hash).filter_keys { |k| k.to_s.length < 3 }.to_hash.size.should eq(4)
+    expect(Map.new(hash).filter_keys { |k| k.to_s.length < 3 }.to_hash.size).to eq(4)
   end
   it 'has #filter_not' do
-    Map.new(hash).filter_not { |k, v| k.to_s.length < 3 }.to_hash.to_s.should eq('{123=>"abc", 234=>"bcd", 345=>"cde"}')
+    expect(Map.new(hash).filter_not { |k, v| k.to_s.length < 3 }.to_hash.to_s).to eq('{123=>"abc", 234=>"bcd", 345=>"cde"}')
   end
   it 'has #find' do
-    Map.new(hash).find { |k, v| k.to_s.length == 2 }.get[1].should eq('ef')
+    expect(Map.new(hash).find { |k, v| k.to_s.length == 2 }.get[1]).to eq('ef')
   end
   it 'has #forall' do
-    Map.new(hash).forall { |k, v| k.to_s.length <= 3 }.should eq(true)
-    Map.new(hash).forall { |k, v| k.to_s.length >= 2 }.should eq(false)
+    expect(Map.new(hash).forall { |k, v| k.to_s.length <= 3 }).to eq(true)
+    expect(Map.new(hash).forall { |k, v| k.to_s.length >= 2 }).to eq(false)
   end
   it 'has #foreach' do
     returned = Map.new(hash).foreach do |k, v|
-      hash.include?(k).should eq(true)
+      expect(hash.include?(k)).to eq(true)
     end
-    returned.should eq(nil)
+    expect(returned).to eq(nil)
   end
   it 'has #get_or_else' do
-    Map.new(hash).get_or_else(123, 'xxx').should eq('abc')
-    Map.new(hash).get_or_else(999, 'xxx').should eq('xxx')
+    expect(Map.new(hash).get_or_else(123, 'xxx')).to eq('abc')
+    expect(Map.new(hash).get_or_else(999, 'xxx')).to eq('xxx')
   end
   it 'has #is_empty' do
-    Map.new(hash).is_empty.should eq(false)
-    Map.new({}).is_empty.should eq(true)
-    Map.new(nil).is_empty.should eq(true)
+    expect(Map.new(hash).is_empty).to eq(false)
+    expect(Map.new({}).is_empty).to eq(true)
+    expect(Map.new(nil).is_empty).to eq(true)
   end
   it 'has #key_set' do
-    Map.new(hash).key_set.should eq(hash.keys)
+    expect(Map.new(hash).key_set).to eq(hash.keys)
   end
   it 'has #lift' do
     lifted = Map.new(hash).lift
-    lifted.apply(123).get.should eq('abc')
-    lifted.apply(999).is_defined.should eq(false)
-    lifted.call(123).get.should eq('abc')
-    lifted.call(999).is_defined.should eq(false)
+    expect(lifted.apply(123).get).to eq('abc')
+    expect(lifted.apply(999).is_defined).to eq(false)
+    expect(lifted.call(123).get).to eq('abc')
+    expect(lifted.call(999).is_defined).to eq(false)
   end
   it 'has #map' do
     new_map = Map.new(hash).map { |k, v| [k+k, v] }.to_hash
-    new_map.include?(246).should eq(true)
+    expect(new_map.include?(246)).to eq(true)
   end
   it 'has #minus' do
-    Map.new(hash).minus(123, 234, 345).to_hash.should eq({4 => 'd', 56 => 'ef', 7 => 'g', 89 => 'hi'})
+    expect(Map.new(hash).minus(123, 234, 345).to_hash).to eq({4 => 'd', 56 => 'ef', 7 => 'g', 89 => 'hi'})
   end
   it 'has #mk_string' do
-    Map.new(hash).mk_string().should eq('{123=>abc, 234=>bcd, 345=>cde, 4=>d, 56=>ef, 7=>g, 89=>hi}')
+    expect(Map.new(hash).mk_string()).to eq('{123=>abc, 234=>bcd, 345=>cde, 4=>d, 56=>ef, 7=>g, 89=>hi}')
   end
   it 'has #non_empty' do
-    Map.new(hash).non_empty.should eq(true)
-    Map.new({}).non_empty.should eq(false)
-    Map.new(nil).non_empty.should eq(false)
+    expect(Map.new(hash).non_empty).to eq(true)
+    expect(Map.new({}).non_empty).to eq(false)
+    expect(Map.new(nil).non_empty).to eq(false)
   end
   it 'has #plus' do
-    Map.new({123 => 'abc', 234 => 'bcd'}).plus([[345, 'cde']]).to_hash.should eq({123 => 'abc', 234 => 'bcd', 345 => 'cde'})
+    expect(Map.new({123 => 'abc', 234 => 'bcd'}).plus([[345, 'cde']]).to_hash).to eq({123 => 'abc', 234 => 'bcd', 345 => 'cde'})
   end
   it 'has #updated' do
-    Map.new({123 => 'abc', 234 => 'bcd'}).updated(345, 'cde').to_hash.should eq({123 => 'abc', 234 => 'bcd', 345 => 'cde'})
+    expect(Map.new({123 => 'abc', 234 => 'bcd'}).updated(345, 'cde').to_hash).to eq({123 => 'abc', 234 => 'bcd', 345 => 'cde'})
   end
   it 'has #unzip' do
     unzipped = Map.new({123 => 'abc', 234 => 'bcd'}).unzip.to_a
-    unzipped[0].should eq([123, 234])
-    unzipped[1].should eq(['abc', 'bcd'])
+    expect(unzipped[0]).to eq([123, 234])
+    expect(unzipped[1]).to eq(['abc', 'bcd'])
   end
 end
 

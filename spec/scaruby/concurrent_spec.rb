@@ -9,9 +9,9 @@ describe Scaruby::ConcurrentOps do
       sleep 0.3
       is_done = true
     end
-    is_done.should eq(false)
+    expect(is_done).to eq(false)
     sleep 0.5
-    is_done.should eq(true)
+    expect(is_done).to eq(true)
   end
   it 'has #future' do
     is_done = false
@@ -21,11 +21,11 @@ describe Scaruby::ConcurrentOps do
       sleep 0.5
       :ok
     }
-    is_done.should eq(false)
+    expect(is_done).to eq(false)
     sleep 0.5
-    is_done.should eq(true)
-    future.get.should eq(:ok)
-    is_done.should eq(true)
+    expect(is_done).to eq(true)
+    expect(future.get).to eq(:ok)
+    expect(is_done).to eq(true)
   end
 end
 

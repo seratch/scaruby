@@ -11,12 +11,12 @@ describe Scaruby::IO::Source do
     file = 'spec/scaruby_spec.rb'
     source = Source.from_file(file)
     source.to_seq.foreach do |c|
-      line.is_a?(String).should eq(true)
+      expect(line.is_a?(String)).to eq(true)
     end
     lines = source.get_lines
-    lines.is_a?(Enumerable).should eq(true)
+    expect(lines.is_a?(Enumerable)).to eq(true)
     lines.foreach do |line|
-      line.is_a?(String).should eq(true)
+      expect(line.is_a?(String)).to eq(true)
     end
   end
   it 'has from_bytes' do
@@ -24,32 +24,32 @@ describe Scaruby::IO::Source do
     bytes = str.bytes.to_a
     source = Source.from_bytes(bytes)
     source.to_seq.foreach do |c|
-      c.is_a?(String).should eq(true)
+      expect(c.is_a?(String)).to eq(true)
     end
-    source.get_lines.mk_string.should eq(str)
+    expect(source.get_lines.mk_string).to eq(str)
   end
   it 'has from_url with a http url' do
     source = Source.from_url(http_url)
     source.to_seq.foreach do |c|
-      c.is_a?(String).should eq(true)
+      expect(c.is_a?(String)).to eq(true)
     end
   end
   it 'has from_url with a https url' do
     source = Source.from_url(https_url)
     source.to_seq.foreach do |c|
-      c.is_a?(String).should eq(true)
+      expect(c.is_a?(String)).to eq(true)
     end
   end
   it 'has #get_lines' do
     source = Source.from_url(http_url, 'UTF-8')
     source.get_lines.foreach do |line|
-      line.is_a?(String).should eq(true)
+      expect(line.is_a?(String)).to eq(true)
     end
   end
   it 'has #to_seq' do
     source = Source.from_url(http_url)
     source.to_seq.foreach do |c|
-      c.is_a?(String).should eq(true)
+      expect(c.is_a?(String)).to eq(true)
     end
   end
 

@@ -5,12 +5,12 @@ require 'scaruby'
 describe Option do
   it 'has self.new' do
     some = Option.new(123)
-    some.is_defined.should eq(true)
-    some.is_empty.should eq(false)
+    expect(some.is_defined).to eq(true)
+    expect(some.is_empty).to eq(false)
   end
   it 'has #get and the method works with Some' do
     some = Option.new(123)
-    some.get.should eq(123)
+    expect(some.get).to eq(123)
   end
   it 'has #get and the method works with None' do
     none = Option.new(nil)
@@ -22,29 +22,29 @@ describe Option do
   end
   it 'has #get_or_else and the method works with Some' do
     some = Option.new(123)
-    some.get_or_else(999).should eq(123)
+    expect(some.get_or_else(999)).to eq(123)
   end
   it 'has #get_or_else and the method works with None' do
     none = Option.new(nil)
-    none.get_or_else(999).should eq(999)
+    expect(none.get_or_else(999)).to eq(999)
   end
   it 'has #map and the method works with Some' do
     some = Option.new(123)
     some_result = some.map { |v| v + v }
-    some_result.get_or_else(999).should eq(246)
+    expect(some_result.get_or_else(999)).to eq(246)
   end
   it 'has #map and the method works with None' do
     none = Option.new(nil)
     none_result = none.map { |v| v + v }
-    none_result.get_or_else(999).should eq(999)
+    expect(none_result.get_or_else(999)).to eq(999)
   end
   it 'has #fold and the method works with Some' do
     some = Option.new(123)
-    some.fold(999){ |v| v +v }.should eq(246)
+    expect(some.fold(999){ |v| v +v }).to eq(246)
   end
   it 'has #fold and the method works with None' do
     none = Option.new(nil)
-    none.fold(999){ |v| v +v }.should eq(999)
+    expect(none.fold(999){ |v| v +v }).to eq(999)
   end
 end
 
