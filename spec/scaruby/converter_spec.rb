@@ -18,9 +18,9 @@ end
 
 describe Object do
   it 'has #to_option' do
-    expect('abc'.to_option.is_defined).to eq(true)
+    expect('abc'.to_option.is_defined).to be_truthy
     expect('abc'.to_option.get_or_else('zzz')).to eq('abc')
-    expect(nil.to_option.is_defined).to eq(false)
+    expect(nil.to_option.is_defined).to be_falsey
     expect(nil.to_option.get_or_else('zzz')).to eq('zzz')
   end
 end

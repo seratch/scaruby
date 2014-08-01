@@ -11,8 +11,8 @@ describe Enumerable do
     expect(one_to_five.to_a).to eq([1, 2, 3, 4, 5])
   end
   it 'has #corresponds' do
-    expect([1, 2, 3].corresponds([1, 2, 3]) { |a, b| a == b }).to eq(true)
-    expect([1, 2, 3].corresponds([3, 1, 2]) { |a, b| a == b }).to eq(false)
+    expect([1, 2, 3].corresponds([1, 2, 3]) { |a, b| a == b }).to be_truthy
+    expect([1, 2, 3].corresponds([3, 1, 2]) { |a, b| a == b }).to be_falsey
   end
   it 'has #count' do
     expect(one_to_five.count { |i| i > 2 }).to eq(3)
@@ -35,16 +35,16 @@ describe Enumerable do
     expect([5, 3, 2, 4, 1].drop_while { |e| e > 2 }.to_a).to eq([2, 4, 1])
   end
   it 'has #ends_with' do
-    expect([1, 2, 3].ends_with([1, 2])).to eq(false)
-    expect([1, 2, 3].ends_with([1, 2, 3])).to eq(true)
-    expect([1, 2, 3].ends_with([1, 1, 2, 3])).to eq(false)
-    expect([1, 2, 3].ends_with([2, 3])).to eq(true)
-    expect([1, 2, 3].ends_with([3])).to eq(true)
+    expect([1, 2, 3].ends_with([1, 2])).to be_falsey
+    expect([1, 2, 3].ends_with([1, 2, 3])).to be_truthy
+    expect([1, 2, 3].ends_with([1, 1, 2, 3])).to be_falsey
+    expect([1, 2, 3].ends_with([2, 3])).to be_truthy
+    expect([1, 2, 3].ends_with([3])).to be_truthy
   end
   it 'has #exists' do
-    expect([1, 2, 3].exists { |i| i < 2 }).to eq(true)
-    expect([1, 2, 3].exists { |i| i < 4 }).to eq(true)
-    expect([2, 3, 4].exists { |i| i > 4 }).to eq(false)
+    expect([1, 2, 3].exists { |i| i < 2 }).to be_truthy
+    expect([1, 2, 3].exists { |i| i < 4 }).to be_truthy
+    expect([2, 3, 4].exists { |i| i > 4 }).to be_falsey
   end
   it 'has #filter' do
     expect(one_to_five.filter { |i| i > 3 }.to_a).to eq([4, 5])
@@ -61,7 +61,7 @@ describe Enumerable do
     expect(some).to eq(1)
     none = one_to_five.find { |i| i > 10 }
     # the already defined method is called
-    #none.is_defined.should eq(false)
+    #none.is_defined.should be_falsey
     expect(none).to eq(nil)
   end
   it 'has #flat_map and it works with nested arrays' do
@@ -71,7 +71,7 @@ describe Enumerable do
     # the already defined method is called
     #([1,2,nil,3]).flat_map {|i| Option.new(i) }.to_a.should eq([1,2,3])
     [1, 2, nil, 3].flat_map { |i| Option.new(i) }.to_a do |opt|
-      expect(opt.is_a?(Option)).to eq(true)
+      expect(opt.is_a?(Option)).to be_truthy
     end
   end
   it 'has #fold_left' do
@@ -100,12 +100,12 @@ describe Enumerable do
      Option.new(2),
      Option.new(nil),
      Option.new(3)].flatten.to_a.each do |opt|
-      expect(opt.is_a?(Option)).to eq(true)
+      expect(opt.is_a?(Option)).to be_truthy
     end
   end
   it 'has #forall' do
-    expect([1, 2, 3].forall { |i| i > 0 }).to eq(true)
-    expect([1, 2, 3].forall { |i| i > 1 }).to eq(false)
+    expect([1, 2, 3].forall { |i| i > 0 }).to be_truthy
+    expect([1, 2, 3].forall { |i| i > 1 }).to be_falsey
   end
   it 'has #foreach' do
     count = 0
@@ -140,9 +140,9 @@ describe Enumerable do
     expect([1, 2, 3].intersect([2, 3, 4]).to_a).to eq([2, 3])
   end
   it 'has #is_empty' do
-    expect([1, 2, 3].is_empty).to eq(false)
-    expect([nil].is_empty).to eq(false)
-    expect([].is_empty).to eq(true)
+    expect([1, 2, 3].is_empty).to be_falsey
+    expect([nil].is_empty).to be_falsey
+    expect([].is_empty).to be_truthy
   end
   it 'has #last' do
     expect([1, 2, 3].last).to eq(3)
@@ -151,18 +151,18 @@ describe Enumerable do
     some = [1, 2, 3].last_option
     expect(some.get).to eq(3)
     none = ([]).last_option
-    expect(none.is_defined).to eq(false)
+    expect(none.is_defined).to be_falsey
   end
   it 'has #lift' do
     seq_lift = [1, 2, 3].lift
     expect(seq_lift.apply(0).get).to eq(1)
     expect(seq_lift.apply(1).get).to eq(2)
     expect(seq_lift.apply(2).get).to eq(3)
-    expect(seq_lift.apply(3).is_defined).to eq(false)
+    expect(seq_lift.apply(3).is_defined).to be_falsey
     expect(seq_lift.call(0).get).to eq(1)
     expect(seq_lift.call(1).get).to eq(2)
     expect(seq_lift.call(2).get).to eq(3)
-    expect(seq_lift.call(3).is_defined).to eq(false)
+    expect(seq_lift.call(3).is_defined).to be_falsey
   end
   it 'has #map' do
     expect([1, 2, 3].map { |i| i + i }.to_a).to eq([2, 4, 6])
@@ -184,8 +184,8 @@ describe Enumerable do
     expect(one_to_five.mk_string('^', ',', '$', 'zzz')).to eq('^1,2,3,4,5$')
   end
   it 'has #non_empty' do
-    expect(one_to_five.non_empty).to eq(true)
-    expect([].non_empty).to eq(false)
+    expect(one_to_five.non_empty).to be_truthy
+    expect([].non_empty).to be_falsey
   end
   it 'has #partition' do
     expect([5, 2, 3, 1, 4, 2, 3].partition { |i| i < 3 }.to_a).to eq([[2, 1, 2], [5, 3, 4, 3]])
@@ -200,9 +200,9 @@ describe Enumerable do
     expect([1, 2, 3].reverse_map { |i| i + i }.to_a).to eq([6, 4, 2])
   end
   it 'has #same_elements' do
-    expect([1, 2, 3].same_elements([1, 2, 3])).to eq(true)
-    expect([1, 2, 3].same_elements([1, 3, 2])).to eq(false)
-    expect([1, 2, 3].same_elements([1, 2])).to eq(false)
+    expect([1, 2, 3].same_elements([1, 2, 3])).to be_truthy
+    expect([1, 2, 3].same_elements([1, 3, 2])).to be_falsey
+    expect([1, 2, 3].same_elements([1, 2])).to be_falsey
   end
   it 'has #scan_left' do
     expect([1, 2, 3].scan_left(1) { |a, b| a + b }.to_a).to eq([1, 2, 4, 7])
@@ -234,12 +234,12 @@ describe Enumerable do
     expect([1, 2, 3, 2, 1].split_at(3).to_a).to eq([[1, 2, 3], [2, 1]])
   end
   it 'has #starts_with' do
-    expect([1, 2, 3].starts_with([1])).to eq(true)
-    expect([1, 2, 3].starts_with([1, 2])).to eq(true)
-    expect([1, 2, 3].starts_with([1, 2, 3])).to eq(true)
-    expect([1, 2, 3].starts_with([1, 2, 3, 4])).to eq(false)
-    expect([1, 2, 3].starts_with([2, 3])).to eq(false)
-    expect([1, 2, 3].starts_with([4, 1, 2, 3])).to eq(false)
+    expect([1, 2, 3].starts_with([1])).to be_truthy
+    expect([1, 2, 3].starts_with([1, 2])).to be_truthy
+    expect([1, 2, 3].starts_with([1, 2, 3])).to be_truthy
+    expect([1, 2, 3].starts_with([1, 2, 3, 4])).to be_falsey
+    expect([1, 2, 3].starts_with([2, 3])).to be_falsey
+    expect([1, 2, 3].starts_with([4, 1, 2, 3])).to be_falsey
   end
   it 'has #sum' do
     expect([1, 2, 3].sum).to eq(6)

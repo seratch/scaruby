@@ -7,8 +7,8 @@ describe Hash do
   hash = {123 => 'abc', 234 => 'bcd', 345 => 'cde', 4 => 'd', 56 => 'ef', 7 => 'g', 89 => 'hi'}
 
   it 'has #contains' do
-    expect(hash.contains(123)).to eq(true)
-    expect(hash.contains(999)).to eq(false)
+    expect(hash.contains(123)).to be_truthy
+    expect(hash.contains(999)).to be_falsey
   end
   it 'has #count' do
     expect(hash.count { |k, v| k.to_s.length >= 2 }).to eq(5)
@@ -17,7 +17,7 @@ describe Hash do
     expect(Map.empty).to eq({})
   end
   it 'has #exists' do
-    expect(hash.exists { |k, v| k.to_s.length == 1 }).to eq(true)
+    expect(hash.exists { |k, v| k.to_s.length == 1 }).to be_truthy
   end
   it 'has #filter' do
     expect(hash.filter { |k, v| k.to_s.length < 3 }.to_hash.size).to eq(4)
@@ -34,12 +34,12 @@ describe Hash do
     expect(hash.find { |k, v| k.to_s.length == 2 }[1]).to eq('ef')
   end
   it 'has #forall' do
-    expect(hash.forall { |k, v| k.to_s.length <= 3 }).to eq(true)
-    expect(hash.forall { |k, v| k.to_s.length >= 2 }).to eq(false)
+    expect(hash.forall { |k, v| k.to_s.length <= 3 }).to be_truthy
+    expect(hash.forall { |k, v| k.to_s.length >= 2 }).to be_falsey
   end
   it 'has #foreach' do
     hash.foreach do |k, v|
-      expect(hash.include?(k)).to eq(true)
+      expect(hash.include?(k)).to be_truthy
     end
   end
   it 'has #get_or_else' do
@@ -47,8 +47,8 @@ describe Hash do
     expect(hash.get_or_else(999, 'xxx')).to eq('xxx')
   end
   it 'has #is_empty' do
-    expect(hash.is_empty).to eq(false)
-    expect({}.is_empty).to eq(true)
+    expect(hash.is_empty).to be_falsey
+    expect({}.is_empty).to be_truthy
   end
   it 'has #key_set' do
     expect(hash.key_set).to eq(hash.keys)
@@ -56,16 +56,16 @@ describe Hash do
   it 'has #lift' do
     lifted = hash.lift
     expect(lifted.apply(123).get).to eq('abc')
-    expect(lifted.apply(999).is_defined).to eq(false)
+    expect(lifted.apply(999).is_defined).to be_falsey
     expect(lifted.call(123).get).to eq('abc')
-    expect(lifted.call(999).is_defined).to eq(false)
+    expect(lifted.call(999).is_defined).to be_falsey
   end
   it 'has #map' do
     # the already defined method is called
     #new_map = hash.map {|k,v| [k+k,v] }.to_hash
-    #new_map.include?(246).should eq(true)
+    #new_map.include?(246).should be_truthy
     seq = hash.map { |k, v| [k+k, v] }
-    expect(seq.include?([246, 'abc'])).to eq(true)
+    expect(seq.include?([246, 'abc'])).to be_truthy
   end
   it 'has #minus' do
     expect(hash.minus(123, 234, 345).to_hash).to eq({4 => 'd', 56 => 'ef', 7 => 'g', 89 => 'hi'})
@@ -74,8 +74,8 @@ describe Hash do
     expect(hash.mk_string()).to eq('{123=>abc, 234=>bcd, 345=>cde, 4=>d, 56=>ef, 7=>g, 89=>hi}')
   end
   it 'has #non_empty' do
-    expect(hash.non_empty).to eq(true)
-    expect({}.non_empty).to eq(false)
+    expect(hash.non_empty).to be_truthy
+    expect({}.non_empty).to be_falsey
   end
   it 'has #plus' do
     expect({123 => 'abc', 234 => 'bcd'}.plus([[345, 'cde']]).to_hash).to eq({123 => 'abc', 234 => 'bcd', 345 => 'cde'})
