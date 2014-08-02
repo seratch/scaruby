@@ -5,8 +5,8 @@ require 'scaruby'
 describe Option do
   it 'has self.new' do
     some = Option.new(123)
-    expect(some.is_defined).to eq(true)
-    expect(some.is_empty).to eq(false)
+    expect(some.is_defined).to be_truthy
+    expect(some.is_empty).to be_falsey
   end
   it 'has #get and the method works with Some' do
     some = Option.new(123)
